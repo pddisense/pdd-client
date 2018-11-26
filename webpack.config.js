@@ -38,10 +38,6 @@ const config = {
         test: /.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['airbnb'],
-          plugins: ['transform-decorators-legacy',],
-        }
       },
       {
         test: /\.css$/,
