@@ -26,10 +26,7 @@ const curve = new Elliptic.ec('ed25519');
  * Generate a pair of cryptographic keys.
  */
 export function generateKeyPair() {
-  return exportKeyPair(curve.genKeyPair());
-}
-
-function exportKeyPair(pair) {
+  const keyPair = curve.genKeyPair();
   return {
     publicKey: pair.getPublic('hex'),
     privateKey: pair.getPrivate('hex'),
@@ -67,26 +64,26 @@ export function encryptCounters(publicKeys, round, keyPair, counters) {
 
 function importKeyPair(struct) {
   const pair = curve.keyFromPrivate(struct.privateKey, 'hex');
-  pair.pub = importKey(struct.publicKey);
+  pair.pub = importPublicKey(struct.publicKey);
   return pair;
 }
 
-function importKey(str) {
+function importPublicKey(str) {
   return curve.keyFromPublic(str, 'hex').pub;
 }
 
 function generateBlindingFactors(publicKeys, key, clientIndex, L, round) {
   const factors = [];
   for (let l = 0; l < L; l++) {
-    let K_il = curve.curve.zero.fromRed(); // TODO: We are not working on Red's?
+    let K_il = curve.curve.zero.fromRed();
     publicKeys.forEach((userKey, idx) => {
-      const pubKey = importKey(userKey);
+      const pubKey = importPublicKey(userKey);
       const share = key.derive(pubKey);
       const n = new BN(hash(share + l + round));
       if (idx < clientIndex) {
-        K_il = K_il.add(n); //.toRed(BN.red()));
+        K_il = K_il.add(n);
       } else if (idx > clientIndex) {
-        K_il = K_il.sub(n); //.toRed(BN.red()));
+        K_il = K_il.sub(n);
       }
     });
     factors.push(K_il.mod(curve.n));

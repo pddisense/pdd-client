@@ -26,7 +26,6 @@ class BlacklistSection extends React.Component {
   handleClick(idx) {
     const blacklist = { queries: this.props.localData.blacklist.queries.slice() };
     blacklist.queries.splice(idx, 1);
-    console.log({ blacklist });
     this.props.onChange({ blacklist });
   }
 
