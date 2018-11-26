@@ -28,8 +28,8 @@ const curve = new Elliptic.ec('ed25519');
 export function generateKeyPair() {
   const keyPair = curve.genKeyPair();
   return {
-    publicKey: pair.getPublic('hex'),
-    privateKey: pair.getPrivate('hex'),
+    publicKey: keyPair.getPublic('hex'),
+    privateKey: keyPair.getPrivate('hex'),
   };
 }
 
