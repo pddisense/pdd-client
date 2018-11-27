@@ -49,6 +49,33 @@ done
 
 yarn build
 zip -rj dist/chrome.zip dist/chrome
+
 if [[ ${publish} == 1 ]]; then
-  echo "Publishing Chrome extension..."
+  # This is somewhat experimental...
+  # API docs: https://developer.chrome.com/webstore/using_webstore_api
+  echo "Publishing Chrome extension... (EXPERIMENTAL)"
+  URL="https://accounts.google.com/o/oauth2/auth?response_type=code&scope=https://www.googleapis.com/auth/chromewebstore&client_id=775596672401-r80j39mm322k4t4oek67n8bb63vrvn38.apps.googleusercontent.com&redirect_uri=urn:ietf:wg:oauth:2.0:oob"
+  if which xdg-open > /dev/null; then
+    xdg-open $URL
+  elif which open > /dev/null; then
+    open $URL
+  else
+    echo "Please navigate to $URL"
+  fi
+  read -p "Please paste here the authorisation code" TOKEN
+  curl \
+    -H "Authorization: Bearer $TOKEN"  \
+    -H "x-goog-api-version: 2" \
+    -X PUT \
+    -T dist/chrome.zip \
+    -v \
+    https://www.googleapis.com/upload/chromewebstore/v1.1/items/ipeekohlgfhagcopnndkgoommcihmdmk
+  curl \
+    -H "Authorization: Bearer $TOKEN"  \
+    -H "x-goog-api-version: 2" \
+    -H "Content-Length: 0" \
+    -X POST \
+    -v \
+    https://www.googleapis.com/chromewebstore/v1.1/items/ipeekohlgfhagcopnndkgoommcihmdmk/publish
+  echo "The extension should be soon available at https://chrome.google.com/webstore/detail/private-data-donor/ipeekohlgfhagcopnndkgoommcihmdmk"
 fi

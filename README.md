@@ -24,8 +24,7 @@ An unpacked Chrome extension will be generated in the `dist/chrome` directory.
 You can then load it in your browser by going to [chrome://extensions](chrome://extensions), toggling the "Developer mode" switch and then clicking on the "Load unpacked" button.
 Then point to the content of the `dist/chrome` directory.
 
-## Test
-The tests are written with Jest, and are launched via Yarn:
+The tests are equally launched via Yarn:
 ```bash
 yarn test
 ```
@@ -39,6 +38,8 @@ There is a release script, which is a small helper to create a packaged extensio
 ```
 
 This will create a `dist/chrome.zip` package.
+You then need to upload the latest package via the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).
+Alternatively, you can use the `-publish` flag on the release script to automatically upload it to the Web store by using the APIs.
 
 ## About
 Private Data Donor is a research project whose goal is to collect web search queries, in order to identify outbreaks of infectious diseases much earlier than ever before.
