@@ -41,7 +41,8 @@ You then need to upload the latest package via the [Chrome Developer Dashboard](
 Alternatively, you can use the `-publish` flag on the release script to automatically upload it to the Web store by using the APIs.
 
 ## About
-Private Data Donor is a research project whose goal is to collect web search queries, in order to identify outbreaks of infectious diseases much earlier than ever before.
+Private Data Donor is a research project whose goal is to gather statistics about Web search queries in a privacy-preserving way.
+Collected data is then used to help monitoring and predicting outbreaks of infectious diseases such as flu.
 It is developed by [UCL's CS department](http://www.cs.ucl.ac.uk/home/), in the frame of the [i-sense project](https://www.i-sense.org.uk/), the EPSRC IRC in Early Warning Sensing Systems for Infectious Diseases.
 
 ## License
