@@ -11,8 +11,7 @@ To build the extension, you will need to install [Node ≥10](https://nodejs.org
 
 First clone the repository:
 ```bash
-git clone git@github.com:pddisense/pdd-client.git
-cd pdd-client
+git clone git@github.com:pddisense/pdd-client.git && cd pdd-client
 ```
 
 Then build the extension:
