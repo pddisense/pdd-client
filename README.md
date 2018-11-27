@@ -7,11 +7,12 @@ The extension is written in Javascript ES6, transpiled with Babel.
 The user interface is written with React.
 
 ## Build
-To build the extension, you will need to install [Node ≥10](https://nodejs.org) and [Yarn](https://yarnpkg.com).
+To build the extension, you will need [Node ≥10.9.0](https://nodejs.org) and [Yarn](https://yarnpkg.com).
 
 First clone the repository:
 ```bash
-git clone git@github.com:pddisense/pdd-client.git && cd pdd-client
+git clone git@github.com:pddisense/pdd-client.git
+cd pdd-client
 ```
 
 Then build the extension:
