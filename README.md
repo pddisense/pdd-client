@@ -15,31 +15,16 @@ git clone git@github.com:pddisense/pdd-client.git
 cd pdd-client
 ```
 
-Then build the extension:
+Then test and build the extension:
 ```bash
+yarn install
+yarn test
 yarn build
 ```
 
 An unpacked Chrome extension will be generated in the `dist/chrome` directory.
 You can then load it in your browser by going to [chrome://extensions](chrome://extensions), toggling the "Developer mode" switch and then clicking on the "Load unpacked" button.
 Then point to the content of the `dist/chrome` directory.
-
-The tests are equally launched via Yarn:
-```bash
-yarn test
-```
-
-Please allow some time for the tests to complete, as the cryptographic operations are quite extensive.
-
-## Release
-There is a release script, which is a small helper to create a packaged extension, ready to be uploaded on the Chrome Web store.
-```bash
-./bin/release
-```
-
-This will create a `dist/chrome.zip` package.
-You then need to upload the latest package via the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).
-Alternatively, you can use the `-publish` flag on the release script to automatically upload it to the Web store by using the APIs.
 
 ## About
 Private Data Donor is a research project whose goal is to gather statistics about Web search queries in a privacy-preserving way.
