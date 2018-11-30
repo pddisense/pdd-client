@@ -11,15 +11,12 @@ To build the extension, you will need [Node ≥10.9.0](https://nodejs.org) and [
 
 First clone the repository:
 ```bash
-git clone git@github.com:pddisense/pdd-client.git
-cd pdd-client
+git clone git@github.com:pddisense/pdd-client.git && cd pdd-client
 ```
 
-Then test and build the extension:
+Then build the extension:
 ```bash
-yarn install
-yarn test
-yarn build
+./bin/release
 ```
 
 An unpacked Chrome extension will be generated in the `dist/chrome` directory.
