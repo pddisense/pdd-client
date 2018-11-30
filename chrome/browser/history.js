@@ -62,7 +62,7 @@ export function searchHistory(startTime, endTime) {
       // indeed applied on individual visits:
       // https://github.com/chromium/chromium/blob/e0a597faf7cdc0b1a909545c19235e947d44fc66/components/history/core/browser/history_backend.cc#L1300
       //
-      // As a side not, according to Mozilla's documentation, the opposite choice was made in Firefox,
+      // As a side note, according to Mozilla's documentation, the opposite choice was made in Firefox,
       // although the API comes with the same interface.
       startTime: startTime.valueOf(),
       endTime: endTime.valueOf(),
@@ -77,21 +77,25 @@ export function searchHistory(startTime, endTime) {
 
       const searches = {};
       let completed = 0;
+      const next = () => {
+        if (++completed === items.length) {
+          resolve(Object.values(searches));
+        }
+      }
+
       items.forEach((item) => {
         // Because the above free-text filter does not allow for a precise filtering, we need to
         // perform a second pass to ensure that the returned results actually correspond to a
         // Google search (we may have false positives otherwise).
         const url = new URL(item.url, true);
         if (!url.host.startsWith('www.google.') || url.pathname !== '/search' || !url.query.q) {
-          completed++;
-          return;
+          return next();
         }
 
         // The `start` query string parameter is filled when the user navigates across Google's
         // search results pages. We ignore such pages and do not count them as a new search.
         if (url.query.start) {
-          completed++;
-          return;
+          return next();
         }
 
         // Although `startTime` and `endTime` filters do apply on individual visits (cf. the note
@@ -126,9 +130,7 @@ export function searchHistory(startTime, endTime) {
           }
 
           // The promise is only resolved once we have processed all history items.
-          if (++completed === items.length) {
-            resolve(Object.values(searches));
-          }
+          next();
         });
       });
     });
