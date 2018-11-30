@@ -59,7 +59,8 @@ class SettingsSection extends React.Component {
   @autobind
   handleClick() {
     if (this.props.localData.name) {
-      sendPing(this.props.localData);
+      sendPing(this.props.localData)
+        .catch(err => console.log('Error while pinging the server', err));
     }
   }
 

@@ -44,26 +44,28 @@ export default function sendPing(client) {
     `/api/clients/${client.name}/ping`,
     { method: 'POST', body: JSON.stringify(obj) }
   ).then(resp => {
-    // Store the latest vocabulary version, if present.
-    if (resp.vocabulary) {
-      return setData({ vocabulary: resp.vocabulary });
-    } else {
-      return Promise.resolve();
-    }
-  }).then(resp => {
     if (resp.submit) {
       // Submit each sketch that was requested. This ensures that we capture the outcome of
       // every sketch submitted, but we still return the original response. If there is an error,
       // another attempt will be done later on, this is managed in `background.js`.
-      return Promise.all(resp.submit.map(command => submitSketch(client, command))).then(_ => resp);
+      resp.submit.forEach(command => {
+        submitSketch(client, command)
+          .catch(err => console.log(`Failed to send sketch ${command.sketchName}`, err));
+      });
     } else {
-      return Promise.resolve(resp);
+      console.log('No sketch to submit');
     }
-  }).then(resp => {
+    // Store the latest vocabulary version, if present.
+    if (resp.vocabulary) {
+      setData({ vocabulary: resp.vocabulary })
+        .catch(err => console.log('Failed to store vocabulary', err));
+    }
     // Schedule next ping time. Normally, the response comes with a suggested time. If for any
     // reason it is not present, we still schedule one for the next day (otherwise the extension
     // will simply stop sending data).
-    return resp.nextPingTime ? moment(resp.nextPingTime) : moment().add(1, 'day').hours(2);
+    return resp.nextPingTime
+      ? moment(resp.nextPingTime)
+      : moment().add(1, 'day').hours(2);
   });
 }
 
@@ -80,8 +82,6 @@ function submitSketch(client, command) {
       });
     })
     .then(rawValues => {
-      console.log(`Counters from ${startTime.format()} to ${endTime.format()}`);
-      console.log(rawValues);
       const encryptedValues = command.collectEncrypted
         ? encryptCounters(command.publicKeys, command.round, client.keyPair, rawValues)
         : [];
