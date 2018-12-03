@@ -79,12 +79,9 @@ function generateBlindingFactors(publicKeys, key, clientIndex, L, round) {
     publicKeys.forEach((userKey, idx) => {
       const pubKey = importPublicKey(userKey);
       const share = key.derive(pubKey);
-      // Although this is not obvious by just looking at the line,
-      // `share + l + round` is correct because it is equivalent to
-      // `share.toString() + l + round` (meaning that + actually
-      // concatenates strings, as required by the protocol, and not
-      // numbers, as it might be dubious first).
-      const n = new BN(hash(share + l + round));
+      // It is important to note that the + operator is the string concatenation
+      // operator, as required by the protocol, and not an addition.
+      const n = new BN(hash(share.toString() + l + round));
       if (idx < clientIndex) {
         K_il = K_il.add(n);
       } else if (idx > clientIndex) {
