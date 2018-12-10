@@ -16,7 +16,7 @@
  * along with PDD.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const API_URL = process.env.API_URL || 'https://api.ppd.cs.ucl.ac.uk';
+const API_URL = process.env.API_URL || 'https://api.pdd.cs.ucl.ac.uk';
 
 function status(response) {
   if (response.status >= 200 && response.status < 300) {

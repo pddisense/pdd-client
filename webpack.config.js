@@ -77,7 +77,7 @@ module.exports = (env, args) => {
     env.API_URL = 'http://localhost:8000';
     config.mode = 'development';
   } else {
-    env.API_URL = 'https://api.ppd.cs.ucl.ac.uk';
+    env.API_URL = 'https://api.pdd.cs.ucl.ac.uk';
     env.SENTRY_DSN = 'https://7460f432c8bf4fe6bf516fa467141b24@sentry.io/302350';
     config.mode = 'production';
   }

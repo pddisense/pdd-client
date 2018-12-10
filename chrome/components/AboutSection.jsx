@@ -36,7 +36,7 @@ export default class AboutSection extends React.Component {
           <b>About us</b>.
           We are a group of researchers from the University College London.
           You can find out more about our project on the <a
-          target="_blank" href="https://ppd.cs.ucl.ac.uk/">Private Data Donor website</a>.
+          target="_blank" href="https://pdd.cs.ucl.ac.uk/">Private Data Donor website</a>.
         </p>
 
         <p>If you need more information, please contact us via e-mail: <a href="mailto:ppdisense@cs.ucl.ac.uk">ppdisense@cs.ucl.ac.uk</a>.</p>
